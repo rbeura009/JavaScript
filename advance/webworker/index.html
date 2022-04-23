@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button onclick="longFunction()">Long work</button>
+    <button onclick="shortFunction()">short work</button>
+    <button onclick="workerFunction()">worker work</button>
+
+    <script>
+        function shortFunction(){
+            alert('hello from short function')
+        }
+
+        function longFunction(){
+            let sum = 0;let i;
+            for(i=1; i<=5000000000;i++){
+                sum = sum+i;
+            }
+            alert(`sum of ${i} numbers is ${sum}`)
+        }
+
+        function workerFunction(){
+            if(Worker){
+                let myWorker = new Worker('worker.js');
+
+                myWorker.onmessage = (event)=>console.log(event);
+            }
+
+        }
+
+    </script>
+</body>
+</html>

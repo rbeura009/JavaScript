@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <input class="test-input" type="text" />
+    <div>Default: <span class="default"></span></div>
+    <div>Debounce: <span class="Debounce"></span></div>
+    <div>Throttle: <span class="Throttle"></span></div>
+    <script>
+      let timer;
+      document
+        .getElementsByClassName("test-input")[0]
+        .addEventListener("input", function (event) {
+          document.getElementsByClassName("default")[0].textContent =
+            event.target.value;
+
+          if (timer) clearTimeout(timer);
+          timer = setTimeout(() => {
+            document.getElementsByClassName("Debounce")[0].textContent =
+              event.target.value;
+          }, 1000);
+
+          setTimeout(() => {
+            document.getElementsByClassName("Throttle")[0].textContent =
+              event.target.value;
+          }, 1000);
+        });
+    </script>
+  </body>
+</html>

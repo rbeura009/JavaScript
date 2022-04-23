@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    Hello
+    <script>
+      class MyPromise {
+        constructor(handler) {
+          this.status = "pending";
+          this.value = null;
+          this.resolveCallbacks = [];
+          this.rejectCallbacks = [];
+
+          const fn1 = (value) => {
+            if (this.status == "pending") {
+              this.status = "fulfilled";
+              this.value = value;
+              this.resolveCallbacks.forEach((fn) => {
+                return fn(this.value);
+              });
+            }
+          };
+
+          const fn2 = (value) => {
+            if (this.status == "pending") {
+              this.status = "rejected";
+              this.value = value;
+              this.rejectCallbacks.forEach((fn) => fn(this.value));
+            }
+          };
+
+          handler(fn1, fn2);
+        }
+
+        then(fn1, fn2) {
+          if (this.status === "pending") {
+            this.resolveCallbacks.push(fn1);
+            this.rejectCallbacks.push(fn2);
+          }
+
+          if (this.status === "fulfilled") {
+            fn1(this.value);
+          }
+
+          if (this.status === "rejected") {
+            fn2(this.value);
+          }
+        }
+      }
+
+      const p3 = new MyPromise((resolve, reject) => {
+        setTimeout(() => resolve("resolved!"), 1000);
+      });
+      p3.then(
+        (res) => {
+          console.log(res);
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
+
+      p3.then(
+        (res) => {
+          console.log(res);
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
+
+      p3.then(
+        (res) => {
+          console.log(res);
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
+    </script>
+  </body>
+</html>
+
+<!-- new Promise((resolve,reject)) -->
